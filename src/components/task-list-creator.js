@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class App extends Component {
+export default class TaskListCreator extends Component {
   handleSubmit(e) {
     e.preventDefault()
   }
@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className='row'>
         <div className='col-sm-6 col-sm-offset-3'>
-          <form className='taskForm' onSubmit='{this.handleSubmit.bind(this)}'>
+          <form className='taskForm' onSubmit={this.handleSubmit.bind(this)}>
             <div className='form-group'>
               <div className='input-group'>
                 <input id='title' className='form-control'/>
@@ -27,5 +27,3 @@ class App extends Component {
     )
   }
 }
-
-export default App

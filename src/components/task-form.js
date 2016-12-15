@@ -1,4 +1,6 @@
-class TaskForm extends React.Component {
+import React, { Component } from 'react'
+
+export default class TaskForm extends Component {
   constructor(props) {
     super(props)
     let todoId = document.getElementById('todo_id').value
@@ -19,7 +21,7 @@ class TaskForm extends React.Component {
     let todo_id = this.state.todo_id
     let task = { title: title, todo_id: todo_id }
     if (!title) return
-    TodoActions.createTask(task)
+    // TodoActions.createTask(task)
     this.setState({title: ''})
   }
 
@@ -39,7 +41,7 @@ class TaskForm extends React.Component {
 
             <span className="input-group-btn">
               <button type="submit" className="btn btn-primary submitTask">
-                <i className="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                <i className="fa fa-plus" aria-hidden="true"></i>
               </button>
             </span>
 

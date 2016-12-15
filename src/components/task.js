@@ -1,4 +1,7 @@
-class Task extends React.Component {
+import React, { Component } from 'react'
+import classNames from 'classnames'
+
+export default class Task extends Component {
   constructor(props) {
     super(props)
     this.state = {editing: false}
@@ -16,17 +19,17 @@ class Task extends React.Component {
     let title = e.target.value.trim()
     if (title) {
       let task = { id: this.props.task.id, title: title }
-      TodoActions.updateTask(task)
+      // TodoActions.updateTask(task)
     }
   }
 
   handleCompletedChange(e) {
     let task = { id: this.props.task.id, completed: e.target.checked }
-    TodoActions.updateTask(task)
+    // TodoActions.updateTask(task)
   }
 
   handleDelete(e){
-    TodoActions.destroyTask(this.props.task.id)
+    // TodoActions.destroyTask(this.props.task.id)
   }
 
   render () {
@@ -44,7 +47,8 @@ class Task extends React.Component {
           <input
             className={
               classNames(
-                'form-control input-sm task-title', { 'display-task': !this.state.editing }
+                'form-control input-sm task-title',
+                { 'display-task': !this.state.editing }
               )
             }
             id='task'
@@ -59,17 +63,16 @@ class Task extends React.Component {
           <button
             className="btn btn-sm btn-danger pull-right delete-task"
             onClick={this.handleDelete.bind(this)} >
-            <i className="glyphicon glyphicon-minus"></i> </button>
+            <i className="fa fa-minus"></i> </button>
         </div>
       </li>
     )
   }
 }
 
-
 Task.propTypes = {
   id: React.PropTypes.number,
   title: React.PropTypes.string,
   description: React.PropTypes.string,
   completed: React.PropTypes.bool
-};
+}

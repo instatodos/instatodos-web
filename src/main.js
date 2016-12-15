@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Navbar, Jumbotron, Button } from 'react-bootstrap'
+// import { Navbar, Jumbotron, Button } from 'react-bootstrap'
 
-// import 'bootstrap/dist/css/bootstrap.scss'
-// import './index.css'
-// import App from './App'
+import TaskList from './components/task-list';
 
-class Root extends React.Component {
-  render() {
-    return <h1>Hello World</h1>
-  }
-}
+import 'bootstrap/scss/bootstrap.scss'
+import 'font-awesome/scss/font-awesome.scss'
+import './scss/base.scss'
+
+let tasks = [{
+  id: 1,
+  title: 'do',
+  completed: true
+}, {
+  id: 2,
+  title: 'du',
+  completed: false
+}]
 
 ReactDOM.render(
-  <Root/>,
+  <TaskList tasks={tasks}/>,
   document.getElementById('root')
 )

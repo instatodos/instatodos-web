@@ -1,20 +1,22 @@
-class TaskBox extends React.Component {
+import React, { Component } from 'react'
+
+export default class TaskBox extends Component {
   constructor (props) {
     super(props)
-    this.state = TodoStore.getState()
+    // this.state = TodoStore.getState()
     this.onChange = this.onChange.bind(this)
   }
 
   componentWillMount () {
     let todoId = parseInt(this.props.todo_id)
-    TodoStore.listen(this.onChange)
-    TodoActions.fetchTasks(todoId)
+    // TodoStore.listen(this.onChange)
+    // TodoActions.fetchTasks(todoId)
   }
 
   componentWillUnmount() {
-    TodoStore.unlisten(this.onChange)
-
+    // TodoStore.unlisten(this.onChange)
   }
+
   onChange(state) {
     this.setState(state)
   }

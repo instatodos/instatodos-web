@@ -14,4 +14,4 @@
   }
 
   this.TodoServerActionCreators = alt.createActions(TodoServerActionCreators)
-})();
+})()
