@@ -4,7 +4,6 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap'
 
 // import 'bootstrap/dist/css/bootstrap.scss'
 // import './index.css'
-
 // import App from './App'
 
 class Root extends React.Component {

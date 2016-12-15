@@ -1,38 +1,42 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const { resolve } = require('path');
 
-var config = {
+module.exports = {
   entry: [
-    'webpack/hot/dev-server',
+    'react-hot-loader',
+    'webpack/hot/only-dev-server',
     'webpack-dev-server/client?http://localhost:3000',
-    './src/main.js'
+    './src/main'
   ],
-  resolve: {
-    root: [
-      path.resolve(__dirname, './src')
-    ],
-    extensions: ['', '.js', '.json', '.jsx']
-  },
+
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    path: resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
+
+  devtool: 'source-map',
+
+  devServer: {
+    port: 3000,
+    hot: true,
+    quiet: true,
+    contentBase: resolve(__dirname, 'dist'),
+    publicPath: '/'
+  },
+
   module: {
     loaders: [
       {
         test: /\.js?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel'
+        loaders: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
   },
-  devServer: {
-    port: 3000,
-    devtool: 'eval-source-map',
-    progress: true,
-    colors: true,
-    quiet: true,
-  }
-}
 
-module.exports = config;
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],
+}
