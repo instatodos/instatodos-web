@@ -1,5 +1,17 @@
 # instatodos-web
+
+# Important Dependencies
   * ReactJS v15.4.1
+  * Webpack v2.2.0
+
+# Dev Installation
+  * yarn install
+
+# Commands
+  * `test`: Run specs
+  * `test:watch`: Run specs when file changes are detected
+  * `build`: Run webpack build
+  * `dev`: Run webpack server
 
 # TODO
  =====

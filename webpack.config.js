@@ -5,7 +5,7 @@ module.exports = {
   entry: [
     'react-hot-loader',
     'webpack/hot/only-dev-server',
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?http://localhost:8080',
     './src/main'
   ],
 
@@ -18,9 +18,8 @@ module.exports = {
   devtool: 'source-map',
 
   devServer: {
-    port: 3000,
     hot: true,
-    quiet: true,
+    quiet: false,
     contentBase: resolve(__dirname, 'dist'),
     publicPath: '/'
   },
