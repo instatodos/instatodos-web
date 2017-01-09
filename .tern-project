@@ -1,0 +1,12 @@
+{
+  "libs": [
+    browser
+  ],
+  "plugins": {
+    "node": {},
+    "complete_strings": {},
+    "webpack": {
+      "configPath": "./webpack.config.js",
+    }
+  }
+}
