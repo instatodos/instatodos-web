@@ -1,23 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import { Navbar, Jumbotron, Button } from 'react-bootstrap'
 
-import TaskList from './components/task-list';
+import TodoListContainer from './components/TodoListContainer'
 
 import 'font-awesome/scss/font-awesome.scss'
 import './scss/base.scss'
 
-let tasks = [{
-  id: 1,
-  title: 'do',
-  completed: true
-}, {
-  id: 2,
-  title: 'du',
-  completed: false
-}]
+const todoListId = '6cea4495-9318-4b9b-b05f-c8d19791e550'
 
 ReactDOM.render(
-  <TaskList tasks={tasks}/>,
+  <TodoListContainer todoListId={todoListId}/>,
   document.getElementById('root')
 )

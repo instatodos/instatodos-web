@@ -18,6 +18,7 @@ module.exports = {
   devtool: 'source-map',
 
   devServer: {
+    open: true,
     hot: true,
     quiet: false,
     contentBase: resolve(__dirname, 'dist'),

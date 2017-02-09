@@ -4,19 +4,32 @@
 // @import '~font-awesome/scss/font-awesome.scss';
 @import '~bootstrap/scss/bootstrap.scss';
 
-.list-group-item.task {
-  padding-top: 5px;
-  padding-bottom: 5px;
+$animation-speed: 250ms;
+
+.todo-list{
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
 
-.row.no-gutter {
-  margin-right:0;
-  margin-left:0;
+.todo{
+  padding: 0.2rem;
 }
 
-.row.no-gutter > [class*='col-'] {
-  padding-right:0;
-  padding-left:0;
+.todo-title{
+  cursor: text;
+}
+
+.todo-title.editing{
+  color: green;
+}
+
+.todo-title.completed{
+  text-decoration: line-through;
+}
+
+.text-center{
+  text-align: center;
 }
 
 .example-enter {
@@ -25,7 +38,7 @@
 
 .example-enter.example-enter-active {
    opacity: 1;
-   transition: opacity 500ms ease-in;
+   transition: opacity $animation-speed ease-in;
 }
 
 .example-leave {
@@ -34,10 +47,5 @@
 
 .example-leave.example-leave-active {
    opacity: 0.01;
-   transition: opacity 500ms ease-in;
-}
-
-.display-task {
-  cursor: default;
-	box-shadow: none;
+   transition: opacity $animation-speed ease-out;
 }

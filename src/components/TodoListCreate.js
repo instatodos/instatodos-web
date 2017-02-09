@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class TaskListCreator extends Component {
+export default class TodoListCreate extends Component {
   handleSubmit(e) {
     e.preventDefault()
   }
@@ -9,12 +9,12 @@ export default class TaskListCreator extends Component {
     return (
       <div className='row'>
         <div className='col-sm-6 col-sm-offset-3'>
-          <form className='taskForm' onSubmit={this.handleSubmit.bind(this)}>
+          <form className='todo-form' onSubmit={this.handleSubmit.bind(this)}>
             <div className='form-group'>
               <div className='input-group'>
                 <input id='title' className='form-control'/>
                 <span className='input-group-btn'>
-                  <button type='submit' className='btn btn-primary createTodo'>
+                  <button type='submit' className='btn btn-primary todo-create'>
                     Create
                   </button>
                 </span>
