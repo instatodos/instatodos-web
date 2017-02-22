@@ -8,13 +8,13 @@ export default class TodoList extends Component {
     super()
   }
 
-  remove(){
-    console.log('removed')
-  }
-
   renderTodos() {
+    const props = _.omit(this.props, 'todos')
+
     return this.props.todos.map((todo) => {
-      return (<Todo key={todo.id} {...todo} onRemove={this.remove} />)
+      return (
+        <Todo key={todo.id} {...todo} {...props} />
+      )
     })
   }
 
@@ -36,4 +36,8 @@ export default class TodoList extends Component {
       </div>
     )
   }
+}
+
+TodoList.propTypes = {
+  todos: React.PropTypes.array.isRequired
 }

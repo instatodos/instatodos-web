@@ -8,17 +8,18 @@ export default class Todo extends Component {
   }
 
   renderTitle() {
+    const { title, completed } = this.props
     let titleClassNames = classNames(
       'todo-title form-control',
       { 'editing': this.state.isEditing },
-      { 'completed': this.props.completed },
+      { 'completed': completed },
     )
 
     if (this.state.isEditing) {
       return(
         <input
           className={titleClassNames}
-          value={this.props.title}
+          value={title}
           autoFocus
           onClick={this.onTitleClick.bind(this)}
           onBlur={this.onTitleBlur.bind(this)}
@@ -30,12 +31,14 @@ export default class Todo extends Component {
       <span
         className={titleClassNames}
         onClick={this.onTitleClick.bind(this)}
-      > {this.props.title}
+      > {title}
       </span>
     )
   }
 
   render () {
+    const { id, completed, toggleCompleted } = this.props
+
     return (
       <li className='todo'>
         <div className='input-group'>
@@ -43,8 +46,8 @@ export default class Todo extends Component {
           <span className='input-group-addon'>
             <input
               type="checkbox"
-              checked={this.props.completed}
-              onChange={this.onCompletedChange.bind(this)} />
+              checked={completed}
+              onChange={toggleCompleted.bind(this, id)} />
           </span>
 
           { this.renderTitle() }
@@ -68,10 +71,6 @@ export default class Todo extends Component {
 
   onTitleBlur() {
     this.setState({isEditing: false})
-  }
-
-  onCompletedChange() {
-    // return { id: this.props.task.id, completed: e.target.checked }
   }
 
   onRemoveClick(){

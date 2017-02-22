@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import TodoList from './TodoList';
 import TodoCreate from './TodoCreate';
@@ -33,10 +34,21 @@ export default class TodoListContainer extends Component {
           </div>
         </div>
         <br/>
+
         <TodoCreate createTask={this.createTask.bind(this)} />
-        <TodoList todos={this.state.todos} />
+
+        <TodoList
+          todos={this.state.todos}
+          toggleCompleted={this.toggleCompleted.bind(this)}
+        />
       </div>
     )
+  }
+
+  toggleCompleted(id){
+    const foundTodo = _.find(this.state.todos, todo => todo.id === id)
+    foundTodo.completed = !foundTodo.completed
+    this.setState({ todos: this.state.todos })
   }
 
   createTask(title) {
