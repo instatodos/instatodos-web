@@ -1,7 +1,7 @@
 // @import "bootswatch/paper/variables";
-// @import "bootstrap";
 // @import "bootswatch/paper/bootswatch";
-// @import '~font-awesome/scss/font-awesome.scss';
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
 @import '~bootstrap/scss/bootstrap.scss';
 
 $animation-speed: 250ms;
