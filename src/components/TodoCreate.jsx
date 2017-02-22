@@ -10,7 +10,7 @@ export default class TodoCreate extends Component {
 
   render () {
     return (
-      <form onSubmit={this.handleCreate.bind(this)}>
+      <form onSubmit={this.onSubmit.bind(this)}>
         <div className='form-group'>
           <div className="input-group">
             <input
@@ -31,10 +31,10 @@ export default class TodoCreate extends Component {
     )
   }
 
-  handleCreate(event) {
+  onSubmit(event) {
     let title = this.refs.createInput.value.trim()
     event.preventDefault()
-    this.props.createTask(title)
+    this.props.createTodo(title)
     this.refs.createInput.value = ''
   }
 }

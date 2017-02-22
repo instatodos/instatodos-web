@@ -22,7 +22,7 @@ export default class Todo extends Component {
           value={title}
           autoFocus
           onClick={this.onTitleClick.bind(this)}
-          onBlur={this.onTitleBlur.bind(this)}
+          onChange={this.onTitleChange.bind(this)}
         />
       )
     }
@@ -69,12 +69,14 @@ export default class Todo extends Component {
     this.setState({isEditing: true})
   }
 
-  onTitleBlur() {
+  onTitleChange(event) {
     this.setState({isEditing: false})
+    let title = event.target.value.trim()
+    this.props.saveTodo(this.props.id, title)
   }
 
   onRemoveClick(){
-    // return this.props.onRemove(this.props.task)
+    this.props.removeTodo(this.props.id)
   }
 }
 

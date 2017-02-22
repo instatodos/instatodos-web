@@ -35,11 +35,13 @@ export default class TodoListContainer extends Component {
         </div>
         <br/>
 
-        <TodoCreate createTask={this.createTask.bind(this)} />
+        <TodoCreate createTodo={this.createTodo.bind(this)} />
 
         <TodoList
           todos={this.state.todos}
           toggleCompleted={this.toggleCompleted.bind(this)}
+          saveTodo={this.saveTodo.bind(this)}
+          removeTodo={this.removeTodo.bind(this)}
         />
       </div>
     )
@@ -51,7 +53,13 @@ export default class TodoListContainer extends Component {
     this.setState({ todos: this.state.todos })
   }
 
-  createTask(title) {
+  saveTodo(id, title){
+    const foundTodo = _.find(this.state.todos, todo => todo.id === id)
+    foundTodo.title = title
+    this.setState({ todos: this.state.todos })
+  }
+
+  createTodo(title) {
     let id = (this.state.todos.length + 1).toString()
     this.state.todos.push({
       id,
@@ -59,6 +67,12 @@ export default class TodoListContainer extends Component {
       completed: false
     })
     this.setState({ todos: this.state.todos })
+  }
+
+  removeTodo(id){
+    const foundTodo = _.find(this.state.todos, todo => todo.id === id)
+    let todos = _.without(this.state.todos, foundTodo)
+    this.setState({ todos: todos })
   }
 }
 
