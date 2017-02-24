@@ -35,7 +35,9 @@ export default class TodoListContainer extends Component {
         </div>
         <br/>
 
-        <TodoCreate createTodo={this.createTodo.bind(this)} />
+        <TodoCreate
+          todos={this.state.todos}
+          createTodo={this.createTodo.bind(this)} />
 
         <TodoList
           todos={this.state.todos}
@@ -70,9 +72,8 @@ export default class TodoListContainer extends Component {
   }
 
   removeTodo(id){
-    const foundTodo = _.find(this.state.todos, todo => todo.id === id)
-    let todos = _.without(this.state.todos, foundTodo)
-    this.setState({ todos: todos })
+    _.remove(this.state.todos, todo => todo.id === id)
+    this.setState({ todos: this.state.todos })
   }
 }
 

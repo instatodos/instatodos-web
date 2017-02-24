@@ -20,10 +20,6 @@ $animation-speed: 250ms;
   cursor: text;
 }
 
-.todo-title.editing{
-  color: green;
-}
-
 .todo-title.completed{
   text-decoration: line-through;
 }
@@ -48,4 +44,8 @@ $animation-speed: 250ms;
 .example-leave.example-leave-active {
    opacity: 0.01;
    transition: opacity $animation-speed ease-out;
+}
+
+.hand-on-hover{
+  cursor: pointer;
 }
