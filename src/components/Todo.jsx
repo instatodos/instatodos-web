@@ -9,14 +9,15 @@ export default class Todo extends Component {
 
   renderTitle() {
     const { title, completed } = this.props
-    let titleClassNames = classNames(
-      'todo-title form-control',
-      { 'completed': completed },
-    )
+    let titleClass = classNames({
+      'todo-title': true,
+      'form-control': true,
+      'completed': completed
+    })
 
     return(
       <input
-        className={titleClassNames}
+        className={titleClass}
         value={title}
         onClick={this.onTitleClick.bind(this)}
         onBlur={this.onTitleBlur.bind(this)}
@@ -28,19 +29,21 @@ export default class Todo extends Component {
   render () {
     const { id, completed, toggleCompleted } = this.props
 
-    let FormGroupClassNames = classNames(
-      'form-group',
-      { 'has-warning': this.state.isEditing },
-    )
+    let FormGroupClass = classNames({
+      'form-group': true,
+      'has-warning': this.state.isEditing
+    })
 
     return (
       <li className='todo'>
-        <div className={FormGroupClassNames}>
+        <div className={FormGroupClass}>
           <div className='input-group'>
             <span
               onClick={toggleCompleted.bind(this, id)}
               className='input-group-addon hand-on-hover'>
-              <input type="checkbox" checked={completed} />
+              <input type="checkbox"
+                checked={completed}
+                onChange={toggleCompleted.bind(this, id)} />
             </span>
 
             { this.renderTitle() }
@@ -83,5 +86,8 @@ export default class Todo extends Component {
 Todo.propTypes = {
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
-  completed: React.PropTypes.bool.isRequired
+  completed: React.PropTypes.bool.isRequired,
+  toggleCompleted: React.PropTypes.func.isRequired,
+  removeTodo: React.PropTypes.func.isRequired,
+  saveTodo: React.PropTypes.func.isRequired
 }

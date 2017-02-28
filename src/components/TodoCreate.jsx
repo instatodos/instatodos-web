@@ -16,12 +16,13 @@ export default class TodoCreate extends Component {
   }
 
   render () {
-    let formGroupClassNames = classNames(
-      'form-group', { 'has-danger': this.state.error }
-    )
+    let formGroupClass = classNames({
+      'form-group': true,
+      'has-danger': this.state.error
+    })
     return (
       <form onSubmit={this.onSubmit.bind(this)}>
-        <div className={formGroupClassNames}>
+        <div className={formGroupClass}>
 
           <div className="input-group">
             <input
@@ -72,4 +73,9 @@ export default class TodoCreate extends Component {
     }
 
   }
+}
+
+TodoCreate.propTypes = {
+  todos: React.PropTypes.array.isRequired,
+  createTodo: React.PropTypes.func.isRequired
 }
