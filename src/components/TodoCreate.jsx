@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class TodoCreate extends Component {
   constructor(props) {
@@ -11,13 +12,17 @@ export default class TodoCreate extends Component {
 
   renderError() {
     if (!this.state.error) return null
-    return <div style={{color: 'red'}}> {this.state.error} </div>
+    return <div className="form-control-feedback"> {this.state.error} </div>
   }
 
   render () {
+    let formGroupClassNames = classNames(
+      'form-group', { 'has-danger': this.state.error }
+    )
     return (
       <form onSubmit={this.onSubmit.bind(this)}>
-        <div className='form-group'>
+        <div className={formGroupClassNames}>
+
           <div className="input-group">
             <input
               className="form-control"
@@ -25,18 +30,18 @@ export default class TodoCreate extends Component {
               ref='createInput'
             />
 
-            <span className="input-group-btn">
-              <button type="submit" className="btn btn-primary hand-on-hover">
-                <i className="fa fa-plus"></i>
-              </button>
-            </span>
-
-          </div>
-
-          {this.renderError()}
+          <span className="input-group-btn">
+            <button type="submit" className="btn btn-primary hand-on-hover">
+              <i className="fa fa-plus"></i>
+            </button>
+          </span>
 
         </div>
-      </form>
+
+        {this.renderError()}
+
+      </div>
+    </form>
     )
   }
 

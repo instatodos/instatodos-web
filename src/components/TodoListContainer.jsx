@@ -28,11 +28,12 @@ export default class TodoListContainer extends Component {
       <div className="todoListContainer">
         <div className='text-center'>
           <div className="btn-group">
-            <button className="btn btn-default active"> All </button>
-            <button className="btn btn-default"> Incomplete </button>
-            <button className="btn btn-default"> Completed </button>
+            <button className="btn btn-secondary active"> All </button>
+            <button className="btn btn-secondary"> Incomplete </button>
+            <button className="btn btn-secondary"> Completed </button>
           </div>
         </div>
+
         <br/>
 
         <TodoCreate
