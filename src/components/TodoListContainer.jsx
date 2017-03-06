@@ -1,7 +1,9 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import TodoList from './TodoList';
-import TodoCreate from './TodoCreate';
+
+import TodoListStatuses     from './TodoListStatuses';
+import TodoList             from './TodoList';
+import TodoCreate           from './TodoCreate';
 
 const todos = [{
   id: '0cdcf0e9-3a92-4459-b7b3-40087b010cb0',
@@ -26,15 +28,9 @@ export default class TodoListContainer extends Component {
   render () {
     return (
       <div className="todoListContainer">
-        <div className='text-center'>
-          <div className="btn-group">
-            <button className="btn btn-secondary active"> All </button>
-            <button className="btn btn-secondary"> Incomplete </button>
-            <button className="btn btn-secondary"> Completed </button>
-          </div>
-        </div>
+        <TodoListStatuses />
 
-        <br/>
+        <h2>Some list</h2>
 
         <TodoCreate
           todos={this.state.todos}

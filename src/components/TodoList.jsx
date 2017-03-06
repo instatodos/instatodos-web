@@ -21,8 +21,6 @@ export default class TodoList extends Component {
   render () {
     return(
       <div>
-        <h2> Todo: {'Title'} </h2>
-
         {!this.props.todos.length && <span>No todos yet</span>}
 
         <ReactCSSTransitionGroup
