@@ -5,7 +5,7 @@ module.exports = {
   entry: [
     'react-hot-loader',
     'webpack/hot/only-dev-server',
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://0.0.0.0:8080',
     './src/main'
   ],
 

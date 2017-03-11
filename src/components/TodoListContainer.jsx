@@ -1,28 +1,62 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import ActionCable from 'actioncable-esm'
 
 import TodoListStatuses     from './TodoListStatuses';
 import TodoList             from './TodoList';
 import TodoCreate           from './TodoCreate';
 
-const todos = [{
-  id: '0cdcf0e9-3a92-4459-b7b3-40087b010cb0',
-  title: 'Walk dog',
-  completed: true
-}, {
-  id: 'e5f0a108-ead8-4da7-829a-45d1ab4c9372',
-  title: 'Cook dinner',
-  completed: false
-}, {
-  id: '2f71710c-f0fc-495a-a3c8-ba07d9b935d9',
-  title: 'Buy some groceries',
-  completed: false
-}]
-
 export default class TodoListContainer extends Component {
   constructor (props) {
     super(props)
-    this.state = { todos }
+    this.state = {
+      todos: [],
+      cable: ActionCable.createConsumer('ws://localhost:3000/cable'),
+      subscription: {}
+    }
+  }
+
+  componentWillMount() {
+    let component = this
+    this.fetchTodos()
+    const subscription = this.state.cable.subscriptions.create("TodoChannel", {
+      connected() {
+        this.perform('follow', { todo_list_id: 1 })
+      },
+      createTodo(params) {
+        this.perform('create_todo', { todo_params: params })
+      },
+      updateTodo(params) {
+        this.perform('update_todo', { todo_params: params })
+      },
+      deleteTodo(id) {
+        this.perform('delete_todo', { id })
+      },
+      received(data) {
+        const todo = JSON.parse(data['todo'])
+        switch (data['action']) {
+          case 'createTodo':
+            component.state.todos.push(todo)
+            component.setState({ todos: component.state.todos })
+            break
+          case 'updateTodo':
+            let foundTodo = _.find(component.state.todos, t => t.id === todo.id)
+            foundTodo.title = todo.title
+            foundTodo.completed = todo.completed
+            component.setState({ todos: component.state.todos })
+            break
+          case 'deleteTodo':
+            _.remove(component.state.todos, t => t.id === todo.id)
+            component.setState({ todos: component.state.todos })
+            break
+        }
+      }
+    })
+    this.setState({ subscription: subscription })
+  }
+
+  componentWillUnMount() {
+    this.state.cable.subscriptions.remove("TodoChannel")
   }
 
   render () {
@@ -39,38 +73,44 @@ export default class TodoListContainer extends Component {
         <TodoList
           todos={this.state.todos}
           toggleCompleted={this.toggleCompleted.bind(this)}
-          saveTodo={this.saveTodo.bind(this)}
+          updateTodo={this.updateTodo.bind(this)}
           removeTodo={this.removeTodo.bind(this)}
         />
       </div>
     )
   }
 
+  fetchTodos() {
+    const url = 'http://localhost:3000/todo_lists/1'
+    let component = this
+    fetch(url, {id: 'blah'})
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        let todos = data['todos']
+        component.setState({ todos: todos })
+      })
+      .catch(function(error) {
+        console.log('Request failed', error)
+      })
+  }
+
   toggleCompleted(id){
     const foundTodo = _.find(this.state.todos, todo => todo.id === id)
-    foundTodo.completed = !foundTodo.completed
-    this.setState({ todos: this.state.todos })
+    this.updateTodo({ id: id, completed: !foundTodo.completed })
   }
 
-  saveTodo(id, title){
-    const foundTodo = _.find(this.state.todos, todo => todo.id === id)
-    foundTodo.title = title
-    this.setState({ todos: this.state.todos })
+  updateTodo(params){
+    this.state.subscription.updateTodo(params)
   }
 
-  createTodo(title) {
-    let id = (this.state.todos.length + 1).toString()
-    this.state.todos.push({
-      id,
-      title,
-      completed: false
-    })
-    this.setState({ todos: this.state.todos })
+  createTodo(params) {
+    this.state.subscription.createTodo(params)
   }
 
   removeTodo(id){
-    _.remove(this.state.todos, todo => todo.id === id)
-    this.setState({ todos: this.state.todos })
+    this.state.subscription.deleteTodo(id)
   }
 }
 

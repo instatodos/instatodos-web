@@ -68,14 +68,14 @@ export default class Todo extends Component {
 
   onTitleBlur(event) {
     this.setState({isEditing: false})
-    let title = event.target.value.trim()
+    let title = event.target.value
     if(title.length == 0)
       this.props.removeTodo(this.props.id)
   }
 
   onTitleChange(event) {
-    let title = event.target.value.trim()
-    this.props.saveTodo(this.props.id, title)
+    let title = event.target.value
+    this.props.updateTodo({ id: this.props.id, title })
   }
 
   onRemoveClick(){
@@ -89,5 +89,5 @@ Todo.propTypes = {
   completed: React.PropTypes.bool.isRequired,
   toggleCompleted: React.PropTypes.func.isRequired,
   removeTodo: React.PropTypes.func.isRequired,
-  saveTodo: React.PropTypes.func.isRequired
+  updateTodo: React.PropTypes.func.isRequired
 }

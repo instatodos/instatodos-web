@@ -57,7 +57,7 @@ export default class TodoCreate extends Component {
     }
 
     this.setState({ error: null })
-    this.props.createTodo(title)
+    this.props.createTodo({ title })
     this.refs.createInput.value = ''
   }
 

@@ -33,6 +33,14 @@ acorn@^4.0.3, acorn@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.4.tgz#17a8d6a7a6c4ef538b814ec9abac2779293bf30a"
 
+actioncable-esm@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/actioncable-esm/-/actioncable-esm-0.0.1.tgz#8b6d52a8fca5bf47b197ca97ebfb6258b14ee436"
+
+actioncable@5.1.0-beta1:
+  version "5.1.0-beta1"
+  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.1.0-beta1.tgz#8a61cc5bbe90fae097a5360d0163c82e96b2d85f"
+
 ajv-keywords@^1.1.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.0.tgz#c11e6859eafff83e0dafc416929472eca946aa2c"
