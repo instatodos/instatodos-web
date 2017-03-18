@@ -63,13 +63,13 @@ export default class TodoListContainer extends Component {
     return (
       <div className="todoListContainer">
         <TodoListStatuses />
-
+        <br/>
         <h2>Some list</h2>
-
+        <br/>
         <TodoCreate
           todos={this.state.todos}
           createTodo={this.createTodo.bind(this)} />
-
+        <br/>
         <TodoList
           todos={this.state.todos}
           toggleCompleted={this.toggleCompleted.bind(this)}
