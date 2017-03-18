@@ -1,11 +1,10 @@
 class todoChannel = App.cable.subscriptions.create("TodoChannel", {
-  connected: connected() => {
-    let todoId = document.getElementById('todo_id').value
-    this.perform('follow', { todo_id: todoId })
+  connected() {
+    this.perform('follow', { todo_id: 1 })
   },
 
-  createTask: createTask(task) => {
-    this.perform('create_task', { task: task })
+  createTodo(todo) {
+    this.perform('create_todo', { todo: todo })
   },
 
   updateTask: updateTask(task) => {

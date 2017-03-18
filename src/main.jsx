@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { whyDidYouUpdate } from 'why-did-you-update'
 
-if (process.env.NODE_ENV !== 'production') {
-  whyDidYouUpdate(React)
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   whyDidYouUpdate(React)
+// }
 
 import TodoListContainer from './components/TodoListContainer'
 import './scss/base.scss'
