@@ -16,13 +16,14 @@ export default class Todo extends Component {
     })
 
     return(
+      <span className={titleClass} >
       <input
-        className={titleClass}
         value={title}
         onClick={this.onTitleClick.bind(this)}
         onBlur={this.onTitleBlur.bind(this)}
         onChange={this.onTitleChange.bind(this)}
       />
+    </span>
     )
   }
 

@@ -16,12 +16,15 @@ $animation-speed: 200ms;
   margin-bottom: 1vh;
   .form-group{
     margin-bottom: 0;
-
   }
 }
 
 .todo-title{
   cursor: text;
+  input {
+    height: 100%;
+    position: absolute;
+  }
 }
 
 .todo-title.completed{
