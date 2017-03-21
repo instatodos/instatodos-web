@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import ActionCable from 'actioncable-esm'
+import ActionCable from 'actioncable'
 
 import TodoListStatuses     from './TodoListStatuses';
 import TodoList             from './TodoList';
@@ -11,7 +11,7 @@ export default class TodoListContainer extends Component {
     super(props)
     this.state = {
       todos: [],
-      cable: ActionCable.createConsumer('ws://localhost:3000/cable'),
+      cable: ActionCable.createConsumer('/cable'),
       subscription: {}
     }
   }

@@ -33,13 +33,9 @@ acorn@^4.0.3, acorn@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.4.tgz#17a8d6a7a6c4ef538b814ec9abac2779293bf30a"
 
-actioncable-esm@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/actioncable-esm/-/actioncable-esm-0.0.1.tgz#8b6d52a8fca5bf47b197ca97ebfb6258b14ee436"
-
-actioncable@5.1.0-beta1:
-  version "5.1.0-beta1"
-  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.1.0-beta1.tgz#8a61cc5bbe90fae097a5360d0163c82e96b2d85f"
+actioncable@5.1.0rc1:
+  version "5.1.0-rc1"
+  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.1.0-rc1.tgz#f902e86b4b6e7fc486cec9ecb7b1b54c5675f91b"
 
 ajv-keywords@^1.1.1:
   version "1.5.0"
@@ -231,12 +227,6 @@ aws-sign2@~0.6.0:
 aws4@^1.2.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.5.0.tgz#0a29ffb79c31c9e712eeb087e8e7a64b4a56d755"
-
-axios@0.15.3:
-  version "0.15.3"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.15.3.tgz#2c9d638b2e191a08ea1d6cc988eadd6ba5bdc053"
-  dependencies:
-    follow-redirects "1.0.0"
 
 babel-code-frame@^6.11.0, babel-code-frame@^6.20.0:
   version "6.20.0"
@@ -1809,12 +1799,6 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-follow-redirects@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"
-  dependencies:
-    debug "^2.2.0"
-
 font-awesome@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
@@ -2676,7 +2660,7 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-jquery@3.1.1, jquery@>=1.9.1:
+jquery@>=1.9.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.1.1.tgz#347c1c21c7e004115e0a4da32cece041fad3c8a3"
 

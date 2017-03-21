@@ -23,8 +23,7 @@
     "why-did-you-update": "^0.0.8"
   },
   "dependencies": {
-    "actioncable": "5.1.0-beta1",
-    "actioncable-esm": "^0.0.1",
+    "actioncable": "5.1.0rc1",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "2.2.5",
     "font-awesome": "^4.7.0",
