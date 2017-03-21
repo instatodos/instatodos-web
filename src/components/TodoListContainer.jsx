@@ -11,41 +11,39 @@ export default class TodoListContainer extends Component {
     super(props)
     this.state = {
       todos: [],
-      cable: ActionCable.createConsumer('/cable'),
-      subscription: {}
+      cable: ActionCable.createConsumer(`ws://${window.location.hostname}:3000/cable`)
     }
   }
 
   componentWillMount() {
     let component = this
-    this.fetchTodos()
     const subscription = this.state.cable.subscriptions.create("TodoChannel", {
-      connected() {
-        this.perform('follow', { todo_list_id: 1 })
+      connected()         { this.perform('follow', { todo_list_id: 1 }) },
+      create(todo_params) { this.perform('create', { todo_params }) },
+      update(todo_params, persist) {
+        this.perform('update', { todo_params, persist })
       },
-      createTodo(params) {
-        this.perform('create_todo', { todo_params: params })
-      },
-      updateTodo(params) {
-        this.perform('update_todo', { todo_params: params })
-      },
-      deleteTodo(id) {
-        this.perform('delete_todo', { id })
-      },
+      delete(id)          { this.perform('delete', { id }) },
       received(data) {
-        const todo = JSON.parse(data['todo'])
+        let todo={}
         switch (data['action']) {
-          case 'createTodo':
+          case 'follow':
+            component.state.todos = data['todos']
+            component.setState({ todos: component.state.todos })
+            break
+          case 'create':
+            todo = JSON.parse(data['todo'])
             component.state.todos.push(todo)
             component.setState({ todos: component.state.todos })
             break
-          case 'updateTodo':
-            let foundTodo = _.find(component.state.todos, t => t.id === todo.id)
-            foundTodo.title = todo.title
-            foundTodo.completed = todo.completed
+          case 'update':
+            todo = data['todo']
+            let foundTodo = component.state.todos.find(t => t.id === todo.id)
+            Object.assign(foundTodo, todo)
             component.setState({ todos: component.state.todos })
             break
-          case 'deleteTodo':
+          case 'delete':
+            todo = data['todo']
             _.remove(component.state.todos, t => t.id === todo.id)
             component.setState({ todos: component.state.todos })
             break
@@ -68,50 +66,28 @@ export default class TodoListContainer extends Component {
         <br/>
         <TodoCreate
           todos={this.state.todos}
-          createTodo={this.createTodo.bind(this)} />
+          createTodo={this.create.bind(this)} />
         <br/>
         <TodoList
           todos={this.state.todos}
           toggleCompleted={this.toggleCompleted.bind(this)}
-          updateTodo={this.updateTodo.bind(this)}
-          removeTodo={this.removeTodo.bind(this)}
+          updateTodo={this.update.bind(this)}
+          removeTodo={this.remove.bind(this)}
         />
       </div>
     )
   }
 
-  fetchTodos() {
-    const url = 'http://localhost:3000/todo_lists/1'
-    let component = this
-    fetch(url, {id: 'blah'})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        let todos = data['todos']
-        component.setState({ todos: todos })
-      })
-      .catch(function(error) {
-        console.log('Request failed', error)
-      })
-  }
-
   toggleCompleted(id){
-    const foundTodo = _.find(this.state.todos, todo => todo.id === id)
-    this.updateTodo({ id: id, completed: !foundTodo.completed })
+    let foundTodo = component.state.todos.find(t => t.id === todo.id)
+    this.update({ id: id, completed: !foundTodo.completed })
   }
 
-  updateTodo(params){
-    this.state.subscription.updateTodo(params)
-  }
+  update(params, persist){ this.state.subscription.update(params, persist) }
 
-  createTodo(params) {
-    this.state.subscription.createTodo(params)
-  }
+  create(params) { this.state.subscription.create(params) }
 
-  removeTodo(id){
-    this.state.subscription.deleteTodo(id)
-  }
+  remove(id){ this.state.subscription.delete(id) }
 }
 
 TodoListContainer.propTypes = {

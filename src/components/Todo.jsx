@@ -71,11 +71,12 @@ export default class Todo extends Component {
     let title = event.target.value
     if(title.length == 0)
       this.props.removeTodo(this.props.id)
+    this.props.updateTodo({ id: this.props.id, title}, true )
   }
 
   onTitleChange(event) {
     let title = event.target.value
-    this.props.updateTodo({ id: this.props.id, title })
+    this.props.updateTodo({ id: this.props.id, title }, false)
   }
 
   onRemoveClick(){
