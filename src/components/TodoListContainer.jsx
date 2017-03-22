@@ -11,7 +11,8 @@ export default class TodoListContainer extends Component {
     super(props)
     this.state = {
       todos: [],
-      cable: ActionCable.createConsumer(`ws://${window.location.hostname}:3000/cable`)
+      cable: ActionCable.createConsumer(`ws://${window.location.hostname}:3000/cable`),
+      userEditing: 'Carlos'
     }
   }
 
@@ -20,9 +21,7 @@ export default class TodoListContainer extends Component {
     const subscription = this.state.cable.subscriptions.create("TodoChannel", {
       connected()         { this.perform('follow', { todo_list_id: 1 }) },
       create(todo_params) { this.perform('create', { todo_params }) },
-      update(todo_params, persist) {
-        this.perform('update', { todo_params, persist })
-      },
+      update(todo_params) { this.perform('update', { todo_params }) },
       delete(id)          { this.perform('delete', { id }) },
       received(data) {
         let todo={}
@@ -61,15 +60,13 @@ export default class TodoListContainer extends Component {
     return (
       <div className="todoListContainer">
         <TodoListStatuses />
-        <br/>
         <h2>Some list</h2>
-        <br/>
         <TodoCreate
           todos={this.state.todos}
           createTodo={this.create.bind(this)} />
-        <br/>
         <TodoList
           todos={this.state.todos}
+          userEditing={this.state.userEditing}
           toggleCompleted={this.toggleCompleted.bind(this)}
           updateTodo={this.update.bind(this)}
           removeTodo={this.remove.bind(this)}
@@ -83,7 +80,7 @@ export default class TodoListContainer extends Component {
     this.update({ id: id, completed: !foundTodo.completed })
   }
 
-  update(params, persist){ this.state.subscription.update(params, persist) }
+  update(params){ this.state.subscription.update(params) }
 
   create(params) { this.state.subscription.create(params) }
 

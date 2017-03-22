@@ -8,7 +8,7 @@ export default class Todo extends Component {
   }
 
   renderTitle() {
-    const { title, completed } = this.props
+    const { id, title, completed } = this.props
     let titleClass = classNames({
       'todo-title': true,
       'form-control': true,
@@ -16,14 +16,14 @@ export default class Todo extends Component {
     })
 
     return(
-      <span className={titleClass} >
-      <input
-        value={title}
-        onClick={this.onTitleClick.bind(this)}
-        onBlur={this.onTitleBlur.bind(this)}
-        onChange={this.onTitleChange.bind(this)}
-      />
-    </span>
+      <div className={titleClass}>
+        <input
+          value={title}
+          onClick={this.onTitleClick.bind(this)}
+          onBlur={this.onTitleBlur.bind(this)}
+          onChange={this.onTitleChange.bind(this)}
+        />
+      </div>
     )
   }
 
@@ -34,6 +34,8 @@ export default class Todo extends Component {
       'form-group': true,
       'has-warning': this.state.isEditing
     })
+
+    let editingMessage = `${this.props.userEditing} is editing...`
 
     return (
       <li className='todo'>
@@ -56,9 +58,9 @@ export default class Todo extends Component {
                 <i className="fa fa-minus"></i>
               </button>
             </span>
-
           </div>
       </div>
+      <p className='todo-editing text-right'> { editingMessage } </p>
     </li>
     )
   }
@@ -72,12 +74,12 @@ export default class Todo extends Component {
     let title = event.target.value
     if(title.length == 0)
       this.props.removeTodo(this.props.id)
-    this.props.updateTodo({ id: this.props.id, title}, true )
+    this.props.updateTodo({ id: this.props.id, title, user_editing: null})
   }
 
   onTitleChange(event) {
     let title = event.target.value
-    this.props.updateTodo({ id: this.props.id, title }, false)
+    this.props.updateTodo({ id: this.props.id, title, user_editing: this.props.userEditing})
   }
 
   onRemoveClick(){
@@ -88,6 +90,7 @@ export default class Todo extends Component {
 Todo.propTypes = {
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
+  userEditing: React.PropTypes.string.isRequired,
   completed: React.PropTypes.bool.isRequired,
   toggleCompleted: React.PropTypes.func.isRequired,
   removeTodo: React.PropTypes.func.isRequired,
