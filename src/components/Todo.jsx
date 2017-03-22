@@ -8,7 +8,7 @@ export default class Todo extends Component {
   }
 
   renderTitle() {
-    const { title, completed } = this.props
+    const { id, title, completed } = this.props
     let titleClass = classNames({
       'todo-title': true,
       'form-control': true,
@@ -16,14 +16,14 @@ export default class Todo extends Component {
     })
 
     return(
-      <span className={titleClass} >
-      <input
-        value={title}
-        onClick={this.onTitleClick.bind(this)}
-        onBlur={this.onTitleBlur.bind(this)}
-        onChange={this.onTitleChange.bind(this)}
-      />
-    </span>
+      <div className={titleClass}>
+        <input
+          value={title}
+          onClick={this.onTitleClick.bind(this)}
+          onBlur={this.onTitleBlur.bind(this)}
+          onChange={this.onTitleChange.bind(this)}
+        />
+      </div>
     )
   }
 
@@ -56,9 +56,9 @@ export default class Todo extends Component {
                 <i className="fa fa-minus"></i>
               </button>
             </span>
-
           </div>
       </div>
+      <p className='todo-editing text-right'> { 'Sergio is editing...'} </p>
     </li>
     )
   }

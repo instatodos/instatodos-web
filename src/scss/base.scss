@@ -13,7 +13,6 @@ $animation-speed: 200ms;
 }
 
 .todo{
-  margin-bottom: 1vh;
   .form-group{
     margin-bottom: 0;
   }
@@ -21,18 +20,35 @@ $animation-speed: 200ms;
 
 .todo-title{
   cursor: text;
-  input {
-    height: 100%;
-    position: absolute;
+  > input {
+    max-width: 100%;
+    border: 0;
+    display: inline;
+  }
+  >input:focus {
+    outline: none;
   }
 }
 
-.todo-title.completed{
-  text-decoration: line-through;
+// .todo-title.form-control{
+//     display: inline;
+// }
+
+.todo-title .completed{
+  >input {
+    text-decoration: line-through;
+  }
 }
 
 .text-center{
   text-align: center;
+}
+
+.todo-editing{
+  height: 18px;
+  font-size: 12px;
+  margin: 0;
+  color: gray;
 }
 
 .example-enter {
