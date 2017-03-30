@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
@@ -57,25 +56,24 @@ export default class TodoCreate extends Component {
     }
 
     this.setState({ error: null })
-    this.props.createTodo({ title })
+    this.props.create({ title })
     this.refs.createInput.value = ''
   }
 
   validateInput(title){
+    const foundTodo =this.props.todos.find(t => t.title === title)
+    let message = ''
     if (!title) {
-      return 'Please enter a todo'
+      message = 'Please enter a todo'
     }
-    else if(_.find(this.props.todos, todo => todo.title === title)) {
-      return 'Todo already exists'
+    else if(foundTodo) {
+      message = 'Todo already exists'
     }
-    else{
-      return null
-    }
-
+    return message
   }
 }
 
 TodoCreate.propTypes = {
   todos: React.PropTypes.array.isRequired,
-  createTodo: React.PropTypes.func.isRequired
+  create: React.PropTypes.func.isRequired
 }

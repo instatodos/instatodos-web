@@ -38,7 +38,6 @@ export default class TodoList extends Component {
 
 TodoList.propTypes = {
   todos: React.PropTypes.array.isRequired,
-  toggleCompleted: React.PropTypes.func.isRequired,
-  updateTodo: React.PropTypes.func.isRequired,
-  removeTodo: React.PropTypes.func.isRequired
+  update: React.PropTypes.func.isRequired,
+  remove: React.PropTypes.func.isRequired
 }

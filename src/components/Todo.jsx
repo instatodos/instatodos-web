@@ -28,25 +28,25 @@ export default class Todo extends Component {
   }
 
   render () {
-    const { id, completed, toggleCompleted } = this.props
+    const { id, completed, toggleCompleted, user_editing } = this.props
 
     let FormGroupClass = classNames({
       'form-group': true,
       'has-warning': this.state.isEditing
     })
 
-    let editingMessage = `${this.props.userEditing} is editing...`
+    let editingMessage = user_editing ? `${user_editing} is editing...` : ''
 
     return (
       <li className='todo'>
-        <div className={FormGroupClass}>
+        <div className={ FormGroupClass }>
           <div className='input-group'>
             <span
-              onClick={toggleCompleted.bind(this, id)}
+              onClick={ this.onCompletedChange.bind(this) }
               className='input-group-addon hand-on-hover'>
               <input type="checkbox"
-                checked={completed}
-                onChange={toggleCompleted.bind(this, id)} />
+                checked={ completed }
+                onChange={ this.onCompletedChange.bind(this) } />
             </span>
 
             { this.renderTitle() }
@@ -54,7 +54,7 @@ export default class Todo extends Component {
             <span className='input-group-btn'>
               <button
                 className="btn btn-danger hand-on-hover"
-                onClick={this.onRemoveClick.bind(this)} >
+                onClick={ this.onRemoveClick.bind(this) } >
                 <i className="fa fa-minus"></i>
               </button>
             </span>
@@ -69,30 +69,32 @@ export default class Todo extends Component {
     this.setState({isEditing: true})
   }
 
+  onTitleChange(event) {
+    let title = event.target.value
+    this.props.update({ id: this.props.id, title, user_editing: this.props.userEditing})
+  }
+
   onTitleBlur(event) {
     this.setState({isEditing: false})
     let title = event.target.value
     if(title.length == 0)
-      this.props.removeTodo(this.props.id)
-    this.props.updateTodo({ id: this.props.id, title, user_editing: null})
+      this.props.remove(this.props.id)
+    this.props.update({ id: this.props.id, title, user_editing: null})
   }
 
-  onTitleChange(event) {
-    let title = event.target.value
-    this.props.updateTodo({ id: this.props.id, title, user_editing: this.props.userEditing})
+  onCompletedChange() {
+    this.props.update({ id: this.props.id, completed: !this.props.completed })
   }
 
   onRemoveClick(){
-    this.props.removeTodo(this.props.id)
+    this.props.remove(this.props.id)
   }
 }
 
 Todo.propTypes = {
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
-  userEditing: React.PropTypes.string.isRequired,
   completed: React.PropTypes.bool.isRequired,
-  toggleCompleted: React.PropTypes.func.isRequired,
-  removeTodo: React.PropTypes.func.isRequired,
-  updateTodo: React.PropTypes.func.isRequired
+  remove: React.PropTypes.func.isRequired,
+  update: React.PropTypes.func.isRequired
 }
