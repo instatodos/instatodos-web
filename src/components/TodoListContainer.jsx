@@ -12,12 +12,13 @@ export default class TodoListContainer extends Component {
     const todoListId = 1
     this.state = {
       todos: [],
-      user: { name: 'Carlos' },
+      user: Math.floor((Math.random() * 100000) + 1),
       subscription: this.createCableSubscription(cable, todoListId)
     }
   }
 
   render () {
+    const disconnected = this.state.subscription.consumer.connection.disconnected
     return (
       <div className="todoListContainer">
         <TodoListStatuses />
@@ -25,25 +26,33 @@ export default class TodoListContainer extends Component {
         <TodoCreate
           todos={ this.state.todos }
           create={ this.create.bind(this) } />
+        {disconnected && <span>No connection</span>}
         <TodoList
           todos={ this.state.todos}
+          user={ this.state.user}
           update={ this.update.bind(this) }
           remove={ this.remove.bind(this) }
         />
+        <span>{`username: ${this.state.user}`}</span>
       </div>
     )
   }
 
-  create(todo_params) { this.state.subscription.create(arguments[0]) }
-  update(todo_params) { this.state.subscription.update(arguments[0]) }
-  remove(id)          { this.state.subscription.remove(arguments[0]) }
+  create(params) { this.state.subscription.create(arguments[0]) }
+  update(params) { this.state.subscription.update(arguments[0]) }
+  remove(id)     { this.state.subscription.remove(arguments[0]) }
 
   createCableSubscription(cable, todoListId) {
-    return cable.subscriptions.create("TodoChannel", {
-      connected()         { this.perform('follow', { todo_list_id: todoListId }) },
-      create(todo_params) { this.perform('create', { todo_params }) },
-      update(todo_params) { this.perform('update', { todo_params }) },
-      remove(id)          { this.perform('delete', { id }) },
+    return cable.subscriptions.create({ channel:  "TodoChannel", room: todoListId }, {
+      create(params) {
+        this.perform('create', { todo_params: params })
+      },
+      update(params) {
+        this.perform('update', { todo_params: params })
+      },
+      remove(id) {
+        this.perform('delete', { id })
+      },
 
       received: (data) => {
         let todo={}

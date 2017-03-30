@@ -4,7 +4,7 @@ import classNames from 'classnames'
 export default class Todo extends Component {
   constructor() {
     super()
-    this.state = {isEditing: false}
+    this.state = { isEditing: false }
   }
 
   renderTitle() {
@@ -71,7 +71,11 @@ export default class Todo extends Component {
 
   onTitleChange(event) {
     let title = event.target.value
-    this.props.update({ id: this.props.id, title, user_editing: this.props.userEditing})
+    this.props.update({
+      id: this.props.id,
+      title,
+      user_editing: this.props.user
+    })
   }
 
   onTitleBlur(event) {
@@ -79,11 +83,19 @@ export default class Todo extends Component {
     let title = event.target.value
     if(title.length == 0)
       this.props.remove(this.props.id)
-    this.props.update({ id: this.props.id, title, user_editing: null})
+
+    this.props.update({
+      id: this.props.id,
+      title,
+      user_editing: null
+    })
   }
 
   onCompletedChange() {
-    this.props.update({ id: this.props.id, completed: !this.props.completed })
+    this.props.update({
+      id: this.props.id,
+      completed: !this.props.completed
+    })
   }
 
   onRemoveClick(){
@@ -92,6 +104,7 @@ export default class Todo extends Component {
 }
 
 Todo.propTypes = {
+  user: React.PropTypes.object.isRequired,
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
   completed: React.PropTypes.bool.isRequired,

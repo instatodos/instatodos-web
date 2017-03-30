@@ -37,6 +37,7 @@ export default class TodoList extends Component {
 }
 
 TodoList.propTypes = {
+  user: React.PropTypes.object.isRequired,
   todos: React.PropTypes.array.isRequired,
   update: React.PropTypes.func.isRequired,
   remove: React.PropTypes.func.isRequired
