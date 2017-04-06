@@ -26,6 +26,7 @@
     "actioncable": "5.1.0rc1",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "2.2.5",
+    "eslint": "^3.19.0",
     "font-awesome": "^4.7.0",
     "jest": "^19.0.2",
     "lodash": "4.17.2",
