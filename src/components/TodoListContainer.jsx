@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import ActionCable from 'actioncable'
 
@@ -9,85 +8,77 @@ import TodoCreate           from './TodoCreate';
 export default class TodoListContainer extends Component {
   constructor (props) {
     super(props)
+    const cable = ActionCable.createConsumer(`ws://${window.location.hostname}:3000/cable`)
+    const todoListId = 1
     this.state = {
       todos: [],
-      cable: ActionCable.createConsumer(`ws://${window.location.hostname}:3000/cable`)
+      user: Math.floor((Math.random() * 100000) + 1),
+      subscription: this.createCableSubscription(cable, todoListId)
     }
   }
 
-  componentWillMount() {
-    let component = this
-    const subscription = this.state.cable.subscriptions.create("TodoChannel", {
-      connected()         { this.perform('follow', { todo_list_id: 1 }) },
-      create(todo_params) { this.perform('create', { todo_params }) },
-      update(todo_params, persist) {
-        this.perform('update', { todo_params, persist })
-      },
-      delete(id)          { this.perform('delete', { id }) },
-      received(data) {
-        let todo={}
-        switch (data['action']) {
-          case 'follow':
-            component.state.todos = data['todos']
-            component.setState({ todos: component.state.todos })
-            break
-          case 'create':
-            todo = JSON.parse(data['todo'])
-            component.state.todos.push(todo)
-            component.setState({ todos: component.state.todos })
-            break
-          case 'update':
-            todo = data['todo']
-            let foundTodo = component.state.todos.find(t => t.id === todo.id)
-            Object.assign(foundTodo, todo)
-            component.setState({ todos: component.state.todos })
-            break
-          case 'delete':
-            todo = data['todo']
-            _.remove(component.state.todos, t => t.id === todo.id)
-            component.setState({ todos: component.state.todos })
-            break
-        }
-      }
-    })
-    this.setState({ subscription: subscription })
-  }
-
-  componentWillUnMount() {
-    this.state.cable.subscriptions.remove("TodoChannel")
-  }
-
   render () {
+    const disconnected = this.state.subscription.consumer.connection.disconnected
     return (
       <div className="todoListContainer">
         <TodoListStatuses />
-        <br/>
         <h2>Some list</h2>
-        <br/>
         <TodoCreate
-          todos={this.state.todos}
-          createTodo={this.create.bind(this)} />
-        <br/>
+          todos={ this.state.todos }
+          create={ this.create.bind(this) } />
+        {disconnected && <span>No connection</span>}
         <TodoList
-          todos={this.state.todos}
-          toggleCompleted={this.toggleCompleted.bind(this)}
-          updateTodo={this.update.bind(this)}
-          removeTodo={this.remove.bind(this)}
+          todos={ this.state.todos}
+          user={ this.state.user}
+          update={ this.update.bind(this) }
+          remove={ this.remove.bind(this) }
         />
+        <span>{`username: ${this.state.user}`}</span>
       </div>
     )
   }
 
-  toggleCompleted(id){
-    let foundTodo = component.state.todos.find(t => t.id === todo.id)
-    this.update({ id: id, completed: !foundTodo.completed })
+  create(params) { this.state.subscription.create(arguments[0]) }
+  update(params) { this.state.subscription.update(arguments[0]) }
+  remove(id)     { this.state.subscription.remove(arguments[0]) }
+
+  createCableSubscription(cable, todoListId) {
+    return cable.subscriptions.create({ channel:  "TodoChannel", room: todoListId }, {
+      create(params) {
+        this.perform('create', { todo_params: params })
+      },
+      update(params) {
+        this.perform('update', { todo_params: params })
+      },
+      remove(id) {
+        this.perform('delete', { id })
+      },
+
+      received: (data) => {
+        let todo={}
+        switch (data['action']) {
+          case 'index':
+            this.state.todos = data['todos']
+            break
+          case 'create':
+            todo = JSON.parse(data['todo'])
+            this.state.todos.push(todo)
+            break
+          case 'update':
+            todo = data['todo']
+            let foundTodo = this.state.todos.find(t => t.id === todo.id)
+            Object.assign(foundTodo, todo)
+            break
+          case 'delete':
+            todo = data['todo']
+            let index = this.state.todos.findIndex(t => t.id === todo.id)
+            delete this.state.todos[index]
+            break
+        }
+        this.forceUpdate()
+      }
+    })
   }
-
-  update(params, persist){ this.state.subscription.update(params, persist) }
-
-  create(params) { this.state.subscription.create(params) }
-
-  remove(id){ this.state.subscription.delete(id) }
 }
 
 TodoListContainer.propTypes = {
