@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Todo extends Component {
@@ -16,14 +18,13 @@ export default class Todo extends Component {
     })
 
     return(
-      <div className={titleClass}>
-        <input
-          value={title}
-          onClick={this.onTitleClick.bind(this)}
-          onBlur={this.onTitleBlur.bind(this)}
-          onChange={this.onTitleChange.bind(this)}
-        />
-      </div>
+      <input
+        className={titleClass}
+        value={title}
+        onClick={this.onTitleClick.bind(this)}
+        onBlur={this.onTitleBlur.bind(this)}
+        onChange={this.onTitleChange.bind(this)}
+      />
     )
   }
 
@@ -41,17 +42,19 @@ export default class Todo extends Component {
       <li className='todo'>
         <div className={ FormGroupClass }>
           <div className='input-group'>
-            <span
-              onClick={ this.onCompletedChange.bind(this) }
-              className='input-group-addon hand-on-hover'>
-              <input type="checkbox"
-                checked={ completed }
-                onChange={ this.onCompletedChange.bind(this) } />
-            </span>
+            <div className='input-group-prepend hand-on-hover'
+              onClick={ this.onCompletedChange.bind(this) } >
+              <div className="input-group-text">
+                <input type="checkbox"
+                  checked={ completed }
+                  onChange={ this.onCompletedChange.bind(this) }
+                />
+              </div>
+            </div>
 
             { this.renderTitle() }
 
-            <span className='input-group-btn'>
+            <span className='input-group-append'>
               <button
                 className="btn btn-danger hand-on-hover"
                 onClick={ this.onRemoveClick.bind(this) } >
@@ -71,11 +74,7 @@ export default class Todo extends Component {
 
   onTitleChange(event) {
     let title = event.target.value
-    this.props.update({
-      id: this.props.id,
-      title,
-      user_editing: this.props.user
-    })
+    this.props.update( this.props.id, {title, user_editing: this.props.user})
   }
 
   onTitleBlur(event) {
@@ -84,18 +83,11 @@ export default class Todo extends Component {
     if(title.length == 0)
       this.props.remove(this.props.id)
 
-    this.props.update({
-      id: this.props.id,
-      title,
-      user_editing: null
-    })
+    this.props.update(this.props.id, {title})
   }
 
   onCompletedChange() {
-    this.props.update({
-      id: this.props.id,
-      completed: !this.props.completed
-    })
+    this.props.complete(this.props.id)
   }
 
   onRemoveClick(){
@@ -104,10 +96,7 @@ export default class Todo extends Component {
 }
 
 Todo.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  id: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  completed: React.PropTypes.bool.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  update: React.PropTypes.func.isRequired
+  user: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  completed: PropTypes.bool.isRequired
 }
