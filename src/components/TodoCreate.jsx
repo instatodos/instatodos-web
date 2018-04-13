@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class TodoCreate extends Component {
@@ -30,9 +32,9 @@ export default class TodoCreate extends Component {
               ref='createInput'
             />
 
-          <span className="input-group-btn">
+          <span className="input-group-append">
             <button type="submit" className="btn btn-primary hand-on-hover">
-              <i className="fa fa-plus"></i>
+              &nbsp;<i className="fa fa-plus"></i>
             </button>
           </span>
 
@@ -56,7 +58,7 @@ export default class TodoCreate extends Component {
     }
 
     this.setState({ error: null })
-    this.props.create({ title })
+    this.props.create(title)
     this.refs.createInput.value = ''
   }
 
@@ -74,6 +76,5 @@ export default class TodoCreate extends Component {
 }
 
 TodoCreate.propTypes = {
-  todos: React.PropTypes.array.isRequired,
-  create: React.PropTypes.func.isRequired
+  todos: PropTypes.array.isRequired
 }

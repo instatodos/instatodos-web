@@ -1,0 +1,11 @@
+@include media-breakpoint-up(sm) {
+  .todo-list-container {
+    max-width: 80%;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .todo-list-container {
+    max-width: 40%;
+  }
+}

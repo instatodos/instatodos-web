@@ -1,44 +1,39 @@
+import React from 'react'
+import { Component } from 'react'
+import PropTypes from 'prop-types'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import _ from 'lodash'
-import React, { Component } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
 import Todo from './Todo'
 
 export default class TodoList extends Component {
-  constructor() {
-    super()
-  }
-
   renderTodos() {
     const props = _.omit(this.props, 'todos')
 
-    return this.props.todos.map((todo) => {
-      return (
+    return this.props.todos.map((todo, i) => (
+      <CSSTransition
+        key={i}
+        classNames='fade'
+        timeout={{ enter: 500, exit: 300 }} >
         <Todo key={todo.id} {...todo} {...props} />
-      )
-    })
+      </CSSTransition>
+    ))
   }
 
-  render () {
+  render() {
     return(
-      <div>
+      <ol className='todo-list'>
         {!this.props.todos.length && <span>No todos yet</span>}
 
-        <ReactCSSTransitionGroup
-          component="ol"
-          className="todo-list"
-          transitionName= "example"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}>
+        <TransitionGroup>
           { this.renderTodos() }
-        </ReactCSSTransitionGroup>
-      </div>
+        </TransitionGroup>
+      </ol>
     )
   }
 }
 
 TodoList.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  todos: React.PropTypes.array.isRequired,
-  update: React.PropTypes.func.isRequired,
-  remove: React.PropTypes.func.isRequired
+  user: PropTypes.number.isRequired,
+  todos: PropTypes.array.isRequired
 }
