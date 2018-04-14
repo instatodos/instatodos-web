@@ -20,11 +20,6 @@ describe('TodoListContainer', () => {
     expect(wrapper.find(<h2>Some list</h2>)).toBeDefined
   })
 
-  it('contains the todo list statuses selector', () => {
-    const { wrapper } = setup()
-    expect(wrapper.find('TodoListStatuses')).toBeDefined
-  })
-
   it('contains the todo creation component', () => {
     const { wrapper } = setup()
     expect(wrapper.find('TodoCreate')).toBeDefined

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 
 export default class TodoCreate extends Component {
   constructor(props) {
@@ -30,9 +32,9 @@ export default class TodoCreate extends Component {
               ref='createInput'
             />
 
-          <span className="input-group-btn">
+          <span className="input-group-append">
             <button type="submit" className="btn btn-primary hand-on-hover">
-              <i className="fa fa-plus"></i>
+              <FontAwesomeIcon icon={faPlus} />
             </button>
           </span>
 
@@ -71,9 +73,4 @@ export default class TodoCreate extends Component {
     }
     return message
   }
-}
-
-TodoCreate.propTypes = {
-  todos: React.PropTypes.array.isRequired,
-  create: React.PropTypes.func.isRequired
 }
